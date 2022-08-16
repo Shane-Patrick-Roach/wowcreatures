@@ -2,12 +2,14 @@ import express from 'express'
 const app = express()
 import dotenv from "dotenv"
 dotenv.config()
+import 'express-async-errors'
 
 
 // db 
 import connectDB from './db/connect.js'
 
-
+//routers
+import authRouter from './routes/authRoutes.js'
 
 // middleware
 import notFoundMiddleware from "./middleware/not_found.js"
@@ -20,6 +22,8 @@ app.use(express.json())
 app.get('/', (req, res) => {
   res.send("welcome to my domain")
 })
+
+app.use('/api/auth', authRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
